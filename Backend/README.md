@@ -3,9 +3,11 @@
 ## POST /users/register
 
 ### Description
+
 This endpoint is used to register a new user.
 
 ### Request Body
+
 The request body must be a JSON object containing the following fields:
 
 - `fullname`: An object containing:
@@ -15,6 +17,7 @@ The request body must be a JSON object containing the following fields:
 - `password`: A string with at least 6 characters (required)
 
 Example:
+
 ```json
 {
   "fullname": {
@@ -26,13 +29,23 @@ Example:
 }
 ```
 
-### Responses
+### Example of Responses
+
+- `user`: An object containing:
+  - `fullname`: An object containing
+    - `firstname`: A string with at least 3 characters (required)
+    - `lastname`: A string with at least 3 characters (optional)
+  - `email`: A valid email address (required)
+  - `password`: A string with at least 6 characters (required)
+  - `token` (String): JWT Token
 
 #### Success
+
 - **Status Code**: 201 Created
 - **Body**: A JSON object containing the authentication token and user details.
 
 Example:
+
 ```json
 {
   "token": "your_jwt_token",
@@ -48,10 +61,12 @@ Example:
 ```
 
 #### Validation Errors
+
 - **Status Code**: 400 Bad Request
 - **Body**: A JSON object containing validation errors.
 
 Example:
+
 ```json
 {
   "errors": [
@@ -75,4 +90,5 @@ Example:
 ```
 
 ### Notes
+
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.

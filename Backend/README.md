@@ -92,3 +92,93 @@ Example:
 ### Notes
 
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
+
+
+
+# User Login Endpoint
+
+## POST /users/login
+
+### Description
+
+This endpoint is used to authenticate a user and provide a JWT token upon successful login.
+
+### Request Body
+
+The request body must be a JSON object containing the following fields:
+
+- `email`: A valid email address (required)
+- `password`: A string with at least 6 characters (required)
+
+Example:
+
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Example of Responses
+
+#### Success
+
+- **Status Code**: 200 OK
+- **Body**: A JSON object containing the authentication token and user details.
+
+Example:
+
+```json
+{
+  "token": "your_jwt_token",
+  "user": {
+    "_id": "user_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+#### Validation Errors
+
+- **Status Code**: 400 Bad Request
+- **Body**: A JSON object containing validation errors.
+
+Example:
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email",
+      "param": "email",
+      "location": "body"
+    },
+    {
+      "msg": "Password must be at least 6 characters long",
+      "param": "password",
+      "location": "body"
+    }
+  ]
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: 401 Unauthorized
+- **Body**: A JSON object indicating invalid credentials.
+
+Example:
+
+```json
+{
+  "message": "Invalid email and password!"
+}
+```
+
+### Notes
+
+- Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.

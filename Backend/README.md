@@ -371,3 +371,153 @@ Example:
 
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
 
+
+
+# Captains Endpoints
+
+## POST /captains/register
+
+### Description
+
+Registers a new captain.
+
+### Request Body
+
+```json
+{
+  "fullname": {
+    "firstname": "John", // Required, at least 3 characters
+    "lastname": "Doe"    // Optional
+  },
+  "email": "john.doe@example.com", // Required, must be a valid email
+  "password": "securePassword123", // Required, at least 6 characters
+  "vehicle": {
+    "color": "Blue",               // Required, at least 3 characters
+    "plate": "ABC123",             // Required, at least 3 characters
+    "capacity": 4,                 // Required, must be >= 1
+    "vehicleType": "car"           // Required, one of: "car", "motorcycle", "auto"
+  }
+}
+```
+
+### Success Response
+
+```json
+{
+  "token": "jwt_token_here",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email", // Example error
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+---
+
+## POST /captains/login
+
+### Description
+
+Logs in a captain and returns a JWT token.
+
+### Request Body
+
+```json
+{
+  "email": "john.doe@example.com", // Required, valid email
+  "password": "securePassword123"  // Required, at least 6 characters
+}
+```
+
+### Success Response
+
+```json
+{
+  "token": "jwt_token_here",
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+### Error Response
+
+```json
+{
+  "message": "Invalid email and password!"
+}
+```
+
+---
+
+## GET /captains/profile
+
+### Description
+
+Retrieves the authenticated captain's profile.
+
+### Success Response
+
+```json
+{
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Blue",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+---
+
+## GET /captains/logout
+
+### Description
+
+Logs out the captain by invalidating the JWT token.
+
+### Success Response
+
+```json
+{
+  "message": "Logged out successfully!"
+}
+```

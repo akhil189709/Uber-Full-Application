@@ -93,8 +93,6 @@ Example:
 
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
 
-
-
 # User Login Endpoint
 
 ## POST /users/login
@@ -182,3 +180,96 @@ Example:
 ### Notes
 
 - Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
+
+# Get User Profile Endpoint
+
+## GET /users/profile
+
+### Description
+
+This endpoint retrieves the profile information of the currently authenticated user.
+
+### Authentication
+
+A valid JWT token must be included in the request header as an Authorization Bearer token or in the `cookie` header.
+
+### Example of Responses
+
+#### Success
+
+- **Status Code**: 200 OK
+- **Body**: A JSON object containing the user profile information.
+
+Example:
+
+```json
+{
+  "_id": "user_id",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: 401 Unauthorized
+- **Body**: A JSON object indicating that authentication is required.
+
+Example:
+
+```json
+{
+  "message": "Authentication required."
+}
+```
+
+### Notes
+
+- Ensure that the `Authorization` header is set to `Bearer <JWT>` when making requests to this endpoint.
+
+# Logout User Endpoint
+
+## GET /users/logout
+
+### Description
+
+This endpoint logs out the currently authenticated user by clearing the authentication cookie and invalidating the token.
+
+### Authentication
+
+A valid JWT token must be included in the request header as an Authorization Bearer token or in the `cookie` header.
+
+### Example of Responses
+
+#### Success
+
+- **Status Code**: 200 OK
+- **Body**: A JSON object indicating a successful logout.
+
+Example:
+
+```json
+{
+  "message": "Logged out"
+}
+```
+
+#### Authentication Errors
+
+- **Status Code**: 401 Unauthorized
+- **Body**: A JSON object indicating that authentication is required.
+
+Example:
+
+```json
+{
+  "message": "Authentication required."
+}
+```
+
+### Notes
+
+- This endpoint clears the authentication cookie and invalidates the token by adding it to a blacklist.

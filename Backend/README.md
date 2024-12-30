@@ -273,3 +273,101 @@ Example:
 ### Notes
 
 - This endpoint clears the authentication cookie and invalidates the token by adding it to a blacklist.
+
+
+## POST /captains/register
+
+### Description
+
+This endpoint is used to register a new captain.
+
+### Request Body
+
+The request body must be a JSON object containing the following fields:
+
+- `fullname`: An object containing:
+  - `firstname`: A string with at least 3 characters (required).
+  - `lastname`: A string (optional).
+- `email`: A valid email address (required).
+- `password`: A string with at least 6 characters (required).
+- `vehicle`: An object containing:
+  - `color`: A string with at least 3 characters (required).
+  - `plate`: A string with at least 3 characters (required).
+  - `capacity`: An integer of at least 1 (required).
+  - `vehicleType`: A string, one of `"car"`, `"motorcycle"`, or `"auto"` (required).
+
+Example:
+
+```json
+{
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Smith"
+  },
+  "email": "jane.smith@example.com",
+  "password": "securePassword123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Example of Responses
+
+#### Success
+
+- **Status Code**: 201 Created
+- **Body**: A JSON object containing the captain's details.
+
+Example:
+
+```json
+{
+  "captain": {
+    "_id": "captain_id",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    "email": "jane.smith@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+
+#### Validation Errors
+
+- **Status Code**: 400 Bad Request
+- **Body**: A JSON object containing validation errors.
+
+Example:
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid email",
+      "param": "email",
+      "location": "body"
+    },
+    {
+      "msg": "First name must be at least 3 characters long",
+      "param": "fullname.firstname",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### Notes
+
+- Ensure that the `Content-Type` header is set to `application/json` when making requests to this endpoint.
+
